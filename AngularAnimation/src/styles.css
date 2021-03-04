@@ -1,13 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-  background-color: #292929;
+  background-color: #976363;
   padding: 2rem;
   color: #cccccc;
-  margin-top: 44px;
+  margin-top: 14rem;
 }
 
 hr{
 
-  border-top: 1px solid rgba(107, 107, 107, 1)
+  border-top: 1px solid rgb(202, 186, 186)
 }
