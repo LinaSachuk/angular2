@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
       <div class="container-fluid">
           <div class="row">
               <div class="col-5"></div>
-              <div class="col-7"></div>
+              <div class="col-7">
+                <animbox></animbox>
+              </div>
           </div>
       </div>
   `,
