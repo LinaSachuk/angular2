@@ -20,7 +20,7 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
                 transform: 'scale(1)'
             })),
             state('basic', style({
-                backgroundColor: '#440000',
+                backgroundColor: '#440090',
                 transform: 'scale(1.7)'
             })),
             state('delaying', style({
@@ -37,12 +37,12 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
             })),
             transition('* => basic', animate('800ms')),
             transition('* => original', animate('200ms')),
-            transition('* => delaying', animate('800ms 1200ms ease-out')),
+            transition('* => delaying', animate('800ms 1000ms ease-out')),
             transition('* => easing', animate('800ms ease-in-out')),
             transition('* => stepped', [
                 animate('3000ms ease-in-out', keyframes([
                     style({backgroundColor: '#dd9344', transform: 'scale(1.4)', offset: 0.2}),
-                    style({backgroundColor: '#5c2346', transform: 'scale(0.8)', offset: 0.4}),
+                    style({backgroundColor: '#5c2386', transform: 'scale(0.8)', offset: 0.4}),
                     style({backgroundColor: '#1b1b1b', transform: 'scale(1.2)', offset: 0.7}),
                     style({backgroundColor: '#549a76', transform: 'scale(1)', offset: 0.9})
                 ]))
