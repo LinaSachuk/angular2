@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AnimboxComponent } from './animbox.component';
+import { MouseComponent } from './mouse.component';
+
 
 import { HomeComponent } from './routes/home.component';
 import { BasicComponent } from './routes/basic.component';
@@ -38,11 +40,12 @@ const animationRoutes:Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    AnimboxComponent,
+    MouseComponent,
     HomeComponent,
     BasicComponent,
     ContainedComponent,
-    AdvancedComponent,
-    AnimboxComponent
+    AdvancedComponent
   ],
   imports: [
     BrowserModule,

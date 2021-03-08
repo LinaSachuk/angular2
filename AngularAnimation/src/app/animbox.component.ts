@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { trigger, state, style, animate, transition, keyframes, group } from '@angular/animations';
 
 @Component({
   selector: 'animbox',
-  template: `<div [@changeState]="currentState" class="mybox mx-auto"></div>`,
+  template: `
+    <div [@changeState]="currentState" (@changeState.start)="animationBegin($event)" (@changeState.done)="animationEnd($event)" class="mybox mx-auto"></div>
+    <div class="msgbox mx-auto">{{msg}}</div>
+  `,
   styles: [`
     .mybox {
         background-color: #47748f;
@@ -11,6 +14,12 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
         height: 200px;
         border-radius: 6px;
         margin: 6rem;
+    }
+    .msgbox {
+        margin: 2rem;
+        padding-top:2rem;
+        font-size: 1.8rem;
+        text-align: center;
     }
   `],
   animations: [
@@ -20,7 +29,7 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
                 transform: 'scale(1)'
             })),
             state('basic', style({
-                backgroundColor: '#440090',
+                backgroundColor: '#440000',
                 transform: 'scale(1.7)'
             })),
             state('delaying', style({
@@ -35,21 +44,45 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
                 backgroundColor: '#549a76',
                 transform: 'scale(1)'
             })),
+            state('parallel', style({
+                backgroundColor: '#065e65',
+                transform: 'scale(0.4)'
+            })),
             transition('* => basic', animate('800ms')),
             transition('* => original', animate('200ms')),
-            transition('* => delaying', animate('800ms 1000ms ease-out')),
+            transition('* => delaying', animate('800ms 1200ms ease-out')),
             transition('* => easing', animate('800ms ease-in-out')),
             transition('* => stepped', [
                 animate('3000ms ease-in-out', keyframes([
                     style({backgroundColor: '#dd9344', transform: 'scale(1.4)', offset: 0.2}),
-                    style({backgroundColor: '#5c2386', transform: 'scale(0.8)', offset: 0.4}),
+                    style({backgroundColor: '#5c2346', transform: 'scale(0.8)', offset: 0.4}),
                     style({backgroundColor: '#1b1b1b', transform: 'scale(1.2)', offset: 0.7}),
                     style({backgroundColor: '#549a76', transform: 'scale(1)', offset: 0.9})
                 ]))
+            ]),
+            transition('* => parallel', [
+                group([
+                    animate('1000ms ease-out', style({
+                        backgroundColor: '#065e65'
+                    })),
+                    animate('2000ms ease-out', style({
+                        transform: 'scale(0.4)'
+                    }))
+                ])
             ]),
         ])
     ]
 })
 export class AnimboxComponent {
     @Input() currentState;
+
+    msg = "rest";
+    animationBegin(e) {
+        this.msg = e.phaseName + ": " + e.fromState + " => " + e.toState + " [" + e.totalTime + "]";
+    }
+    animationEnd(e) {
+        this.msg = e.phaseName + ": " + e.fromState + " => " + e.toState + " [" + e.totalTime + "]";
+
+        setTimeout(() => {this.msg = ''}, 3000);
+      }
 }
