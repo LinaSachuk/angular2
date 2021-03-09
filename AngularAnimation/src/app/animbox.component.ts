@@ -82,7 +82,5 @@ export class AnimboxComponent {
     }
     animationEnd(e) {
         this.msg = e.phaseName + ": " + e.fromState + " => " + e.toState + " [" + e.totalTime + "]";
-
-        setTimeout(() => {this.msg = ''}, 3000);
-      }
+    }
 }
