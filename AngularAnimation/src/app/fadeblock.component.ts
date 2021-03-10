@@ -22,7 +22,14 @@ import { fadeAnimation } from './animations';
     animations: [
         trigger('changeState', [
             transition('void => *', [
-                useAnimation(fadeAnimation)
+                useAnimation(fadeAnimation, {
+                    params: {
+                        delay: '1000ms',
+                        from: 0,
+                        to: 1,
+                        time: '2s'
+                    }
+                })
             ])
         ])
     ]

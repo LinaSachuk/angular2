@@ -2,9 +2,9 @@ import { animate, animation, style } from '@angular/animations';
 
 export var fadeAnimation = animation([
     style({
-        opacity: "0"
+        opacity: "{{ from }}"
     }),
-    animate("800ms 300ms ease-in-out", style({
-        opacity: "1"
+    animate("{{ time }} {{ delay }} ease-in-out", style({
+        opacity: "{{ to }}"
     }))
 ])
