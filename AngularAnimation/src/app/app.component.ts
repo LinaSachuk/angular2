@@ -1,49 +1,25 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { trigger, transition } from '@angular/animations';
-import { slideAnimation } from './animations';
+import { Component, OnInit } from '@angular/core';
+import { VideoService } from "./video.service";
 
 @Component({
   selector: 'app-root',
   template: `
-    <nav class="navbar navbar-toggleable-sm fixed-top navbar-inverse mb-4" style="background-color:#5c2509;">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#main-nav" aria-controls="main-nav" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#">Angular Animations</a>
-        <div class="collapse navbar-collapse" id="main-nav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/animation-home" routerLinkActive="active">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/animation-basics" routerLinkActive="active">Basics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/animation-contained" routerLinkActive="active">Contained</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/animation-advanced" routerLinkActive="active">Advanced</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="page" [@routerAnimations]="prepareRouteTransition(outlet)">
-        <router-outlet #outlet="outlet"></router-outlet>
-    </div>
-  `,
-  styles: [``],
-  encapsulation: ViewEncapsulation.None,
-    animations: [
-        trigger('routerAnimations', [
-            transition('* => *', slideAnimation)
-        ])
-    ]
+      <div id="fullPlayer" (mouseup)="videoService.dragStop($event)" (mousemove)="videoService.dragMove($event)" (mouseleave)="videoService.dragStop($event)">
+          <div class="embed-responsive embed-responsive-16by9">
+              <video id="videoDisplay" muted (click)="videoService.playVideo()" width="100%" height="100%" class="embed-responsive-item"></video>
+              <div id="bigPlayButton" [ngClass]="{'fade-out':videoService.isPlaying}" class="fader" (click)="videoService.playVideo()"><i class="fa fa-play"></i></div>
+              <div id="videoTitle" [ngClass]="{'fade-out':videoService.isPlaying}" class="fader">{{videoService.currentTitle}}</div>
+              <video-options [ngClass]="{'fade-out':!videoService.showDetails}" class="fader"></video-options>
+          </div>
+          <video-progress></video-progress>
+          <video-toolbar></video-toolbar>
+      </div>
+  `
 })
-export class AppComponent {
-    prepareRouteTransition(outlet) {
-        const animation = outlet.activatedRouteData['animation'] || {};
-        return animation['value'] || null;
-    }
+export class AppComponent implements OnInit {
+  constructor(public videoService:VideoService) {}
+  ngOnInit() {
+    this.videoService.appSetup("videoDisplay");
+    this.videoService.gatherJSON();
+  }
 }
